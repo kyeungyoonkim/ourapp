@@ -1,6 +1,6 @@
 import type { AppData, CoupleSettings } from '../types'
 
-const STORAGE_KEY = 'ourapp-data-v13'
+const STORAGE_KEY = 'ourapp-data-v14'
 
 export { STORAGE_KEY }
 
@@ -8,9 +8,9 @@ export const defaultSettings: CoupleSettings = {
   myName: '윤',
   partnerName: '찬',
   anniversary: '2025-07-07',
-  nextVisit: '2026-06-25',
-  nextVisitEnd: '2026-06-29',
-  nextTripName: '조지아 (찬 방문)',
+  nextVisit: '2026-07-02',
+  nextVisitEnd: '2026-07-05',
+  nextTripName: '볼티모어 (윤 방문, BWI)',
   myCity: '카터스빌',
   myCityNext: '필라델피아',
   myCityMoveDate: '2026-08-01',
@@ -48,7 +48,7 @@ export const defaultData: AppData = {
       type: 'hotel',
       title: '애틀랜타 숙소',
       datetime: '2026-06-25T15:00',
-      endDatetime: '2026-06-29T11:00',
+      endDatetime: '2026-06-28T11:00',
       confirmationCode: 'HTL-8842',
       location: 'Midtown Atlanta',
       note: '체크아웃 11AM',
@@ -106,6 +106,7 @@ export const defaultData: AppData = {
     { id: 'f3', menu: '한식 (불고기)', date: '2025-12-24' },
     { id: 'f4', menu: '멕시칸 볼', date: '2026-02-21' },
     { id: 'f5', menu: '피자', date: '2026-04-11' },
+    { id: 'f6', menu: '갈비찜', date: '2026-06-26' },
   ],
   places: [
     {
@@ -268,8 +269,47 @@ export const defaultData: AppData = {
       note: '11/22–11/28 · 미드웨스트 로드트립',
       emoji: '🌭',
     },
+    {
+      id: '17',
+      name: 'Acworth',
+      state: '조지아',
+      lat: 34.0654,
+      lng: -84.6769,
+      visitedAt: '2026-06-25',
+      note: '6/25–6/28 · Cauble Park에서 수영',
+      emoji: '🏊',
+    },
+    {
+      id: '18',
+      name: 'Alpharetta',
+      state: '조지아',
+      lat: 34.0754,
+      lng: -84.2941,
+      visitedAt: '2026-06-25',
+      note: '6/25–6/28 · 갈비찜 저녁',
+      emoji: '🍖',
+    },
+    {
+      id: '19',
+      name: '카터스빌',
+      state: '조지아',
+      lat: 34.1651,
+      lng: -84.7999,
+      visitedAt: '2026-06-25',
+      note: '6/25–6/28 · 수영, 토이스토리 5 관람',
+      emoji: '🎬',
+    },
   ],
   memories: [
+    {
+      id: '12',
+      title: '찬 조지아 방문',
+      description:
+        '6/25–6/28 Acworth Cauble Park에서 수영, Alpharetta에서 갈비찜, 카터스빌에서 수영, 토이스토리 5 관람.',
+      date: '2026-06-25',
+      endDate: '2026-06-28',
+      emoji: '🍑',
+    },
     {
       id: '1',
       title: '찬 졸업식',
@@ -371,10 +411,11 @@ export const defaultData: AppData = {
     },
   ],
   bucketList: [
-    { id: '0', title: '찬 조지아 방문 (6/25–6/29)', done: false, emoji: '✈️' },
+    { id: '0', title: '찬 조지아 방문 (6/25–6/28)', done: true, emoji: '✈️' },
     { id: '1', title: '콜로라도 여행 (8/11–8/19)', done: false, emoji: '🏔️' },
     { id: '2', title: '로키산맥 트레킹', done: false, emoji: '🥾' },
     { id: '3', title: '미국 서부 로드트립', done: false, emoji: '🚗' },
+    { id: '4', title: '윤 볼티모어 방문 (BWI, 7/2–7/5)', done: false, emoji: '✈️' },
   ],
   calendarEvents: [
     { id: 'c0', title: '미드웨스트 로드트립', startDate: '2024-11-22', endDate: '2024-11-28', type: 'trip', note: 'Indy–Louisville–Nashville–Atlanta–Cincinnati' },
@@ -388,9 +429,10 @@ export const defaultData: AppData = {
     { id: 'c8', title: '시카고 & 인디애나폴리스', startDate: '2026-02-20', endDate: '2026-02-22', type: 'trip', note: '' },
     { id: 'c9', title: '미시간 · 앤아버', startDate: '2026-04-10', endDate: '2026-04-12', type: 'trip', note: '' },
     { id: 'c10', title: '찬 졸업식 (퍼듀)', startDate: '2026-05-15', endDate: '2026-05-17', type: 'visit', note: '웨스트라피엣' },
-    { id: 'c11', title: '찬 조지아 방문', startDate: '2026-06-25', endDate: '2026-06-29', type: 'visit', note: '예정' },
+    { id: 'c11', title: '찬 조지아 방문', startDate: '2026-06-25', endDate: '2026-06-28', type: 'visit', note: 'Acworth Cauble Park 수영, Alpharetta 갈비찜, 카터스빌 수영, 토이스토리 5' },
     { id: 'c12', title: '콜로라도 여행', startDate: '2026-08-11', endDate: '2026-08-19', type: 'trip', note: '예정' },
     { id: 'c13', title: '윤 필라델피아 이사', startDate: '2026-08-01', endDate: '2026-08-01', type: 'other', note: '8/1부터 필라델피아 거주' },
+    { id: 'c14', title: '윤 볼티모어 방문 (BWI)', startDate: '2026-07-02', endDate: '2026-07-05', type: 'visit', note: '예정' },
   ],
   packingList: [
     { id: 'p1', title: '여권/신분증', done: false, owner: 'shared', tripName: '조지아 (찬 방문)' },
@@ -459,7 +501,7 @@ export function loadData(): AppData {
   try {
     let raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) {
-      raw = localStorage.getItem('ourapp-data-v12')
+      raw = localStorage.getItem('ourapp-data-v13')
       if (raw) localStorage.setItem(STORAGE_KEY, raw)
     }
     if (!raw) return structuredClone(defaultData)
