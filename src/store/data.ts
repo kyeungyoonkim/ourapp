@@ -1,4 +1,4 @@
-import type { AppData, CoupleSettings } from '../types'
+import type { AppData, CalendarEvent, CoupleSettings, Memory, TravelPlace } from '../types'
 
 const STORAGE_KEY = 'ourapp-data-v13'
 
@@ -470,6 +470,98 @@ function normalizeSettings(settings: CoupleSettings): CoupleSettings {
   return settings
 }
 
+const juneTripPlaces: TravelPlace[] = [
+  {
+    id: '17',
+    name: 'Acworth',
+    state: '조지아',
+    lat: 34.0665,
+    lng: -84.6783,
+    visitedAt: '2026-06-25',
+    note: '6/25–6/28 · Cauble Park에서 수영',
+    emoji: '🏊',
+  },
+  {
+    id: '18',
+    name: 'Alpharetta',
+    state: '조지아',
+    lat: 34.0754,
+    lng: -84.2941,
+    visitedAt: '2026-06-26',
+    note: '6/25–6/28 · 갈비찜 먹은 날',
+    emoji: '🥘',
+  },
+  {
+    id: '19',
+    name: 'Cartersville',
+    state: '조지아',
+    lat: 34.1651,
+    lng: -84.7999,
+    visitedAt: '2026-06-27',
+    note: '6/25–6/28 · 수영하고 토이스토리 5 봄',
+    emoji: '🎬',
+  },
+]
+
+const juneTripMemory: Memory = {
+  id: '12',
+  title: 'Acworth · Alpharetta · Cartersville',
+  description:
+    '6/25–6/28 Acworth Cauble Park에서 수영하고, Alpharetta에서 갈비찜 먹고, Cartersville에서 수영하고 토이스토리 5 봤던 시간.',
+  date: '2026-06-25',
+  endDate: '2026-06-28',
+  emoji: '🏊',
+}
+
+const juneTripCalendarEvent: CalendarEvent = {
+  id: 'c14',
+  title: 'Acworth · Alpharetta · Cartersville',
+  startDate: '2026-06-25',
+  endDate: '2026-06-28',
+  type: 'trip',
+  note: 'Cauble Park 수영, 갈비찜, 수영, 토이스토리 5',
+}
+
+function ensureJuneTripUpdates(data: AppData): AppData {
+  const places = [...data.places]
+  for (const required of juneTripPlaces) {
+    const exists = places.some(
+      (place) =>
+        place.id === required.id ||
+        (place.name.toLowerCase() === required.name.toLowerCase() &&
+          place.visitedAt === required.visitedAt),
+    )
+    if (!exists) places.push(required)
+  }
+
+  const memories = [...data.memories]
+  const hasMemory = memories.some(
+    (memory) =>
+      memory.id === juneTripMemory.id ||
+      (memory.title === juneTripMemory.title &&
+        memory.date === juneTripMemory.date &&
+        memory.endDate === juneTripMemory.endDate),
+  )
+  if (!hasMemory) memories.push(juneTripMemory)
+
+  const calendarEvents = [...data.calendarEvents]
+  const hasEvent = calendarEvents.some(
+    (event) =>
+      event.id === juneTripCalendarEvent.id ||
+      (event.title === juneTripCalendarEvent.title &&
+        event.startDate === juneTripCalendarEvent.startDate &&
+        event.endDate === juneTripCalendarEvent.endDate),
+  )
+  if (!hasEvent) calendarEvents.push(juneTripCalendarEvent)
+
+  return {
+    ...data,
+    places,
+    memories,
+    calendarEvents,
+  }
+}
+
 export function normalizeAppData(parsed: Partial<AppData>): AppData {
   const defaults = structuredClone(defaultData)
   const packingList = (parsed.packingList?.length ? parsed.packingList : defaults.packingList).map(
@@ -480,7 +572,7 @@ export function normalizeAppData(parsed: Partial<AppData>): AppData {
     }),
   )
 
-  return {
+  return ensureJuneTripUpdates({
     ...defaults,
     ...parsed,
     settings: normalizeSettings({ ...defaultSettings, ...parsed.settings }),
@@ -494,7 +586,7 @@ export function normalizeAppData(parsed: Partial<AppData>): AppData {
     expenses: normalizeExpenses(parsed.expenses?.length ? parsed.expenses : defaults.expenses),
     foodLogs: parsed.foodLogs?.length ? parsed.foodLogs : defaults.foodLogs,
     trash: parsed.trash ?? [],
-  }
+  })
 }
 
 export function loadData(): AppData {
